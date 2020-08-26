@@ -144,11 +144,44 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      // while loop (this row column pair is in bounds)
+      //  check whether that square is occupied
+      //    if so bump counter up by one
+      //    and check whether the counter has exceeded one
+      //      if so return true
+      var grid = this.rows();
+      var n = grid.length;
+      var count = 0;
+      var row, col;
+      if (majorDiagonalColumnIndexAtFirstRow > 0) {
+        row = 0;
+        col = majorDiagonalColumnIndexAtFirstRow;
+      } else {
+        row = majorDiagonalColumnIndexAtFirstRow * -1;
+        col = 0;
+      }
+      while (this._isInBounds(row, col)) {
+        if (grid[row][col] === 1) {
+          count++;
+          if (count > 1) {
+            return true;
+          }
+        }
+        row++;
+        col++;
+      }
+      return false;
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
+      var grid = this.rows();
+      var n = grid.length;
+      for (var i = 1 - n; i < n; i++) {
+        if (this.hasMajorDiagonalConflictAt(i)) {
+          return true;
+        }
+      }
       return false; // fixme
     },
 
