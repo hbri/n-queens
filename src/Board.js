@@ -79,11 +79,27 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      return false; // fixme
+      // checks whether there are two or more pieces on the provided row
+      // row is in a sub array within the array of arrays
+      // 1 is occupied 0 is empty
+      var row = this.rows()[rowIndex];
+      row = row.filter(function(item) {
+        return item === 1;
+      });
+      return row.length > 1;
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
+      // run a for loop from 0 to but not including n where n is number of rows,
+      //then run hasRowConflictAt on each row. if so,return true immediately. if
+      //all pass without returning true, return false.
+      var n = this.rows().length;
+      for (var i = 0; i < n; i++) {
+        if (this.hasRowConflictAt(i)) {
+          return true;
+        }
+      }
       return false; // fixme
     },
 
